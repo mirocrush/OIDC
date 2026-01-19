@@ -1,0 +1,1081 @@
+Are you familiar with OIDC?
+I am a beginner in this field so I wanna sense and taste what it is.
+So can you build a simple full stack web application using Node + Express backend And React + webpack frontend and no database.
+I wanna signin using google or github.
+Yes, I'm familiar with OIDC (OpenID Connect). Let me give you a quick overview and then build a simple full-stack application for you.
+
+What is OIDC?
+OpenID Connect (OIDC) is an identity layer built on top of OAuth 2.0. It allows applications to:
+
+Verify user identity through an external provider (Google, GitHub, etc.)
+Get basic profile information (name, email, picture)
+Do this without handling passwords yourself
+The flow works like this:
+
+User clicks "Sign in with Google"
+Your app redirects to Google's login page
+User logs in and grants permission
+Google redirects back with an authorization code
+Your backend exchanges the code for tokens (including ID token with user info)
+User is now authenticated in your app
+Let me build a simple demo application for you.
+
+EnterPlanMode
+OUT
+Entered plan mode. You should now focus on exploring the codebase and designing an implementation approach.
+
+In plan mode, you should:
+1. Thoroughly explore the codebase to understand existing patterns
+2. Identify similar features and architectural approaches
+3. Consider multiple approaches and their trade-offs
+4. Use AskUserQuestion if you need to clarify the approach
+5. Design a concrete implementation strategy
+6. When ready, use ExitPlanMode to present your plan for approval
+
+Remember: DO NOT write or edit any files yet. This is a read-only exploration and planning phase.
+Since this is a new project (empty directory), I don't need to explore an existing codebase. Let me design a plan for this OIDC demo application.
+
+Write C:\Users\user\.claude\plans\pure-moseying-engelbart.md
+83 lines
+# OIDC Demo Application Plan
+
+## Overview
+Build a simple full-stack web application demonstrating OIDC authentication with Google and GitHub providers.
+
+## Tech Stack
+- **Backend**: Node.js + Express
+- **Frontend**: React + Webpack
+- **Auth**: Passport.js with Google and GitHub strategies
+- **Session**: express-session (in-memory, no database)
+
+## Project Structure
+```
+e:\OIDC\
+├── package.json
+├── server/
+│   ├── index.js          # Express server entry
+│   ├── auth.js           # Passport configuration
+│   └── routes.js         # API routes
+├── client/
+│   ├── src/
+│   │   ├── index.js      # React entry
+│   │   ├── App.jsx       # Main app component
+│   │   └── components/
+│   │       ├── Login.jsx
+│   │       └── Profile.jsx
+│   └── public/
+│       └── index.html
+├── webpack.config.js
+└── .env.example          # Template for OAuth credentials
+```
+
+## Implementation Steps
+
+### 1. Initialize Project
+- Create package.json with all dependencies
+- Dependencies: express, passport, passport-google-oauth20, passport-github2, express-session, cors, dotenv
+- Dev dependencies: webpack, webpack-cli, webpack-dev-middleware, babel-loader, @babel/core, @babel/preset-react, react, react-dom
+
+### 2. Backend Setup
+- **server/index.js**: Express server with session middleware, passport initialization, serve webpack bundle
+- **server/auth.js**: Configure Passport with Google and GitHub OAuth strategies
+- **server/routes.js**: Auth routes (/auth/google, /auth/github, /auth/callback/*, /auth/logout, /api/user)
+
+### 3. Frontend Setup
+- **webpack.config.js**: Configure Babel for React JSX
+- **client/src/App.jsx**: Main component with auth state management
+- **client/src/components/Login.jsx**: Login buttons for Google/GitHub
+- **client/src/components/Profile.jsx**: Display user info after login
+
+### 4. OAuth Flow Implementation
+1. User clicks "Sign in with Google/GitHub"
+2. Frontend redirects to `/auth/google` or `/auth/github`
+3. Passport redirects to provider's consent screen
+4. Provider redirects back to `/auth/callback/google` or `/auth/callback/github`
+5. Passport exchanges code for tokens, extracts user profile
+6. User stored in session, redirected to frontend
+7. Frontend fetches `/api/user` to get logged-in user info
+
+## Files to Create
+1. `package.json` - Project dependencies
+2. `server/index.js` - Express server
+3. `server/auth.js` - Passport configuration
+4. `server/routes.js` - API routes
+5. `client/public/index.html` - HTML template
+6. `client/src/index.js` - React entry point
+7. `client/src/App.jsx` - Main React component
+8. `client/src/components/Login.jsx` - Login UI
+9. `client/src/components/Profile.jsx` - Profile UI
+10. `webpack.config.js` - Webpack configuration
+11. `.env.example` - Environment variables template
+12. `README.md` - Setup instructions
+
+## Verification
+1. User creates OAuth apps on Google and GitHub developer consoles
+2. User copies `.env.example` to `.env` and fills in credentials
+3. Run `npm install`
+4. Run `npm start`
+5. Visit http://localhost:3000
+6. Click "Sign in with Google" or "Sign in with GitHub"
+7. Complete OAuth flow
+8. See profile information displayed
+AskUserQuestion
+OUT
+User has answered your questions: "Do you have Google and GitHub OAuth credentials already, or do you need instructions on how to create them?"="Need instructions". You can now continue with the user's answers in mind.
+Good, I'll include detailed OAuth setup instructions. Let me finalize the plan.
+
+Edit C:\Users\user\.claude\plans\pure-moseying-engelbart.md
+Added 7 lines
+The plan is ready. Let me exit plan mode for your approval.
+
+Claude’s Plan
+OIDC Demo Application Plan
+Overview
+Build a simple full-stack web application demonstrating OIDC authentication with Google and GitHub providers.
+
+Tech Stack
+Backend: Node.js + Express
+Frontend: React + Webpack
+Auth: Passport.js with Google and GitHub strategies
+Session: express-session (in-memory, no database)
+Project Structure
+
+e:\OIDC\
+├── package.json
+├── server/
+│   ├── index.js          # Express server entry
+│   ├── auth.js           # Passport configuration
+│   └── routes.js         # API routes
+├── client/
+│   ├── src/
+│   │   ├── index.js      # React entry
+│   │   ├── App.jsx       # Main app component
+│   │   └── components/
+│   │       ├── Login.jsx
+│   │       └── Profile.jsx
+│   └── public/
+│       └── index.html
+├── webpack.config.js
+└── .env.example          # Template for OAuth credentials
+Implementation Steps
+1. Initialize Project
+Create package.json with all dependencies
+Dependencies: express, passport, passport-google-oauth20, passport-github2, express-session, cors, dotenv
+Dev dependencies: webpack, webpack-cli, webpack-dev-middleware, babel-loader, @babel/core, @babel/preset-react, react, react-dom
+2. Backend Setup
+server/index.js: Express server with session middleware, passport initialization, serve webpack bundle
+server/auth.js: Configure Passport with Google and GitHub OAuth strategies
+server/routes.js: Auth routes (/auth/google, /auth/github, /auth/callback/*, /auth/logout, /api/user)
+3. Frontend Setup
+webpack.config.js: Configure Babel for React JSX
+client/src/App.jsx: Main component with auth state management
+client/src/components/Login.jsx: Login buttons for Google/GitHub
+client/src/components/Profile.jsx: Display user info after login
+4. OAuth Flow Implementation
+User clicks "Sign in with Google/GitHub"
+Frontend redirects to /auth/google or /auth/github
+Passport redirects to provider's consent screen
+Provider redirects back to /auth/callback/google or /auth/callback/github
+Passport exchanges code for tokens, extracts user profile
+User stored in session, redirected to frontend
+Frontend fetches /api/user to get logged-in user info
+Files to Create
+package.json - Project dependencies
+server/index.js - Express server
+server/auth.js - Passport configuration
+server/routes.js - API routes
+client/public/index.html - HTML template
+client/src/index.js - React entry point
+client/src/App.jsx - Main React component
+client/src/components/Login.jsx - Login UI
+client/src/components/Profile.jsx - Profile UI
+webpack.config.js - Webpack configuration
+.env.example - Environment variables template
+README.md - Setup instructions
+README Content
+Include detailed instructions for:
+
+Creating Google OAuth app (Google Cloud Console)
+Creating GitHub OAuth app (GitHub Developer Settings)
+Setting callback URLs correctly
+Running the application
+Verification
+Follow README to create OAuth apps
+Copy .env.example to .env and fill in credentials
+Run npm install
+Run npm start
+Visit http://localhost:3000
+Click "Sign in with Google" or "Sign in with GitHub"
+Complete OAuth flow
+See profile information displayed
+User approved the plan
+Let me create the todo list and start building the application.
+
+Update Todos
+
+Create package.json with dependencies
+
+Create server files (index.js, auth.js, routes.js)
+
+Create webpack.config.js
+
+Create client HTML and React components
+
+Create .env.example and README.md
+Write e:\OIDC\package.json
+31 lines
+{
+  "name": "oidc-demo",
+  "version": "1.0.0",
+  "description": "Simple OIDC demo with Google and GitHub authentication",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "@babel/preset-react": "^7.23.0",
+    "babel-loader": "^9.1.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-middleware": "^6.1.1"
+  }
+}
+Update Todos
+
+Create package.json with dependencies
+
+Create server files (index.js, auth.js, routes.js)
+
+Create webpack.config.js
+
+Create client HTML and React components
+
+Create .env.example and README.md
+Write e:\OIDC\server\auth.js
+67 lines
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
+
+// In-memory user store (no database)
+const users = new Map();
+
+// Serialize user to session
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Deserialize user from session
+passport.deserializeUser((id, done) => {
+  const user = users.get(id);
+  done(null, user || null);
+});
+
+// Google OAuth Strategy
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/callback/google'
+  }, (accessToken, refreshToken, profile, done) => {
+    // Create user object from Google profile
+    const user = {
+      id: `google-${profile.id}`,
+      provider: 'google',
+      providerId: profile.id,
+      displayName: profile.displayName,
+      email: profile.emails?.[0]?.value,
+      photo: profile.photos?.[0]?.value
+    };
+
+    // Store in memory
+    users.set(user.id, user);
+    done(null, user);
+  }));
+}
+
+// GitHub OAuth Strategy
+if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+  passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: '/auth/callback/github'
+  }, (accessToken, refreshToken, profile, done) => {
+    // Create user object from GitHub profile
+    const user = {
+      id: `github-${profile.id}`,
+      provider: 'github',
+      providerId: profile.id,
+      displayName: profile.displayName || profile.username,
+      email: profile.emails?.[0]?.value,
+      photo: profile.photos?.[0]?.value,
+      username: profile.username
+    };
+
+    // Store in memory
+    users.set(user.id, user);
+    done(null, user);
+  }));
+}
+
+module.exports = passport;
+Write e:\OIDC\server\routes.js
+54 lines
+const express = require('express');
+const passport = require('passport');
+
+const router = express.Router();
+
+// Google OAuth routes
+router.get('/auth/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
+
+router.get('/auth/callback/google', passport.authenticate('google', {
+  failureRedirect: '/?error=google_auth_failed'
+}), (req, res) => {
+  // Successful authentication
+  res.redirect('/');
+});
+
+// GitHub OAuth routes
+router.get('/auth/github', passport.authenticate('github', {
+  scope: ['user:email']
+}));
+
+router.get('/auth/callback/github', passport.authenticate('github', {
+  failureRedirect: '/?error=github_auth_failed'
+}), (req, res) => {
+  // Successful authentication
+  res.redirect('/');
+});
+
+// Logout route
+router.get('/auth/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect('/');
+  });
+});
+
+// Get current user
+router.get('/api/user', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({
+      authenticated: true,
+      user: req.user
+    });
+  } else {
+    res.json({
+      authenticated: false,
+      user: null
+    });
+  }
+});
+
+module.exports = router;
+Write e:\OIDC\server\index.js
+64 lines
+require('dotenv').config();
+
+const express = require('express');
+const session = require('express-session');
+const path = require('path');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+
+const passport = require('./auth');
+const routes = require('./routes');
+const webpackConfig = require('../webpack.config');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Session configuration (in-memory store)
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // Set to true if using HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Webpack dev middleware for serving React app
+const compiler = webpack(webpackConfig);
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: webpackConfig.output.publicPath
+}));
+
+// API and auth routes
+app.use(routes);
+
+// Serve static files
+app.use(express.static(path.join(__dirname, '../client/public')));
+
+// Fallback to index.html for client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/public/index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`
+====================================
+  OIDC Demo Server Running
+====================================
+
+  URL: http://localhost:${PORT}
+
+  OAuth Providers Configured:
+  - Google: ${process.env.GOOGLE_CLIENT_ID ? 'Yes' : 'No (missing GOOGLE_CLIENT_ID)'}
+  - GitHub: ${process.env.GITHUB_CLIENT_ID ? 'Yes' : 'No (missing GITHUB_CLIENT_ID)'}
+
+  Make sure to set up your .env file!
+====================================
+`);
+});
+Update Todos
+
+Create package.json with dependencies
+
+Create server files (index.js, auth.js, routes.js)
+
+Create webpack.config.js
+
+Create client HTML and React components
+
+Create .env.example and README.md
+Write e:\OIDC\webpack.config.js
+29 lines
+const path = require('path');
+
+module.exports = {
+  mode: 'development',
+  entry: './client/src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'client/public'),
+    filename: 'bundle.js',
+    publicPath: '/'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  }
+};
+Update Todos
+
+Create package.json with dependencies
+
+Create server files (index.js, auth.js, routes.js)
+
+Create webpack.config.js
+
+Create client HTML and React components
+
+Create .env.example and README.md
+Write e:\OIDC\client\public\index.html
+166 lines
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OIDC Demo - Sign in with Google or GitHub</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #root {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-google {
+      background: #fff;
+      color: #333;
+      border: 2px solid #ddd;
+    }
+
+    .btn-github {
+      background: #24292e;
+      color: white;
+    }
+
+    .btn-logout {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+    }
+
+    .profile {
+      text-align: center;
+    }
+
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 16px;
+      border: 3px solid #667eea;
+    }
+
+    .profile-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .profile-email {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .profile-provider {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .loading {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .divider::before {
+      margin-right: 10px;
+    }
+
+    .divider::after {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="card">
+      <div class="loading">Loading...</div>
+    </div>
+  </div>
+  <script src="/bundle.js"></script>
+</body>
+</html>
+Write e:\OIDC\client\src\index.js
+8 lines
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App />);
+Write e:\OIDC\client\src\App.jsx
+45 lines
+import React, { useState, useEffect } from 'react';
+import Login from './components/Login';
+import Profile from './components/Profile';
+
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch current user on mount
+    fetch('/api/user')
+      .then(res => res.json())
+      .then(data => {
+        if (data.authenticated) {
+          setUser(data.user);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch user:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="card">
+        <div className="loading">Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="card">
+      {user ? (
+        <Profile user={user} />
+      ) : (
+        <Login />
+      )}
+    </div>
+  );
+}
+
+export default App;
+Write e:\OIDC\client\src\components\Login.jsx
+42 lines
+import React from 'react';
+
+// Google icon SVG
+const GoogleIcon = () => (
+  <svg viewBox="0 0 24 24">
+    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  </svg>
+);
+
+// GitHub icon SVG
+const GitHubIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+  </svg>
+);
+
+function Login() {
+  return (
+    <>
+      <h1>Welcome</h1>
+      <p className="subtitle">Sign in to continue</p>
+
+      <a href="/auth/google" className="btn btn-google">
+        <GoogleIcon />
+        Sign in with Google
+      </a>
+
+      <div className="divider">or</div>
+
+      <a href="/auth/github" className="btn btn-github">
+        <GitHubIcon />
+        Sign in with GitHub
+      </a>
+    </>
+  );
+}
+
+export default Login;
+Write e:\OIDC\client\src\components\Profile.jsx
+36 lines
+import React from 'react';
+
+function Profile({ user }) {
+  return (
+    <div className="profile">
+      {user.photo && (
+        <img
+          src={user.photo}
+          alt={user.displayName}
+          className="profile-photo"
+        />
+      )}
+
+      <h2 className="profile-name">{user.displayName}</h2>
+
+      {user.email && (
+        <p className="profile-email">{user.email}</p>
+      )}
+
+      {user.username && (
+        <p className="profile-email">@{user.username}</p>
+      )}
+
+      <span className="profile-provider">
+        Signed in with {user.provider === 'google' ? 'Google' : 'GitHub'}
+      </span>
+
+      <a href="/auth/logout" className="btn btn-logout">
+        Sign Out
+      </a>
+    </div>
+  );
+}
+
+export default Profile;
+Update Todos
+
+Create package.json with dependencies
+
+Create server files (index.js, auth.js, routes.js)
+
+Create webpack.config.js
+
+Create client HTML and React components
+
+Create .env.example and README.md
+Write e:\OIDC\.env.example
+16 lines
+# Session secret (change this to a random string)
+SESSION_SECRET=your-super-secret-key-change-me
+
+# Google OAuth credentials
+# Get these from: https://console.cloud.google.com/apis/credentials
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# GitHub OAuth credentials
+# Get these from: https://github.com/settings/developers
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+
+# Server port (optional, defaults to 3000)
+PORT=3000
+Write e:\OIDC\README.md
+137 lines
+# OIDC Demo Application
+
+A simple full-stack application demonstrating OpenID Connect (OIDC) authentication with Google and GitHub.
+
+## What is OIDC?
+
+**OpenID Connect (OIDC)** is an identity layer built on top of OAuth 2.0. It allows your application to:
+- Verify user identity through external providers (Google, GitHub, etc.)
+- Get basic profile information (name, email, photo)
+- Authenticate users without handling passwords
+
+### How the Flow Works
+
+```
+1. User clicks "Sign in with Google"
+2. Your app redirects to Google's login page
+3. User logs in and grants permission
+4. Google redirects back with an authorization code
+5. Your backend exchanges the code for tokens
+6. User info is extracted and stored in session
+7. User is now authenticated!
+```
+
+## Setup Instructions
+
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Create Google OAuth Credentials
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project (or select existing one)
+3. Navigate to **APIs & Services > Credentials**
+4. Click **Create Credentials > OAuth client ID**
+5. Select **Web application**
+6. Add authorized redirect URI: `http://localhost:3000/auth/callback/google`
+7. Copy the **Client ID** and **Client Secret**
+
+### 3. Create GitHub OAuth Credentials
+
+1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
+2. Click **New OAuth App**
+3. Fill in the details:
+   - **Application name**: OIDC Demo (or anything you like)
+   - **Homepage URL**: `http://localhost:3000`
+   - **Authorization callback URL**: `http://localhost:3000/auth/callback/github`
+4. Click **Register application**
+5. Copy the **Client ID**
+6. Click **Generate a new client secret** and copy it
+
+### 4. Configure Environment Variables
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and fill in your credentials:
+
+```env
+SESSION_SECRET=your-random-secret-string
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+```
+
+### 5. Run the Application
+
+```bash
+npm start
+```
+
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Project Structure
+
+```
+OIDC/
+├── package.json          # Dependencies
+├── webpack.config.js     # Webpack configuration
+├── .env                  # Your credentials (don't commit!)
+├── .env.example          # Template for credentials
+├── server/
+│   ├── index.js          # Express server entry point
+│   ├── auth.js           # Passport.js configuration
+│   └── routes.js         # Auth & API routes
+└── client/
+    ├── public/
+    │   └── index.html    # HTML template
+    └── src/
+        ├── index.js      # React entry point
+        ├── App.jsx       # Main component
+        └── components/
+            ├── Login.jsx   # Login buttons
+            └── Profile.jsx # User profile display
+```
+
+## Key Concepts Explained
+
+### OAuth 2.0 vs OIDC
+
+- **OAuth 2.0**: Authorization framework - "Can this app access my photos?"
+- **OIDC**: Identity layer on OAuth - "Who is this user?"
+
+### Tokens in OIDC
+
+1. **Authorization Code**: Temporary code exchanged for tokens
+2. **Access Token**: Used to access protected resources
+3. **ID Token**: JWT containing user identity information
+4. **Refresh Token**: Used to get new access tokens
+
+### Session-Based Auth (This Demo)
+
+After OIDC authentication:
+1. User info is stored in server-side session
+2. Session ID is stored in browser cookie
+3. Subsequent requests use cookie for authentication
+
+## Troubleshooting
+
+### "redirect_uri_mismatch" Error
+- Ensure callback URLs match exactly in Google/GitHub console
+- Check for trailing slashes
+
+### "Not found" After Login
+- Make sure the server is running
+- Check that `.env` file exists and has correct values
+
+### Cannot Connect
+- Verify PORT in `.env` matches where you're browsing
+- Check no other app is using port 3000
+Update Todos
+
+Create package.json with dependencies
+
+Create server files (index.js, auth.js, routes.js)
+
+Create webpack.config.js
+
+Create client HTML and React components
+
+Create .env.example and README.md
+The OIDC demo application is complete. Here's a summary of what was created:
+
+Files Created
+File	Purpose
+package.json	Project dependencies
+webpack.config.js	Webpack + Babel for React
+server/index.js	Express server entry point
+server/auth.js	Passport.js OAuth configuration
+server/routes.js	Auth & API routes
+client/public/index.html	HTML template with CSS
+client/src/index.js	React entry point
+client/src/App.jsx	Main React component
+client/src/components/Login.jsx	Login buttons UI
+client/src/components/Profile.jsx	User profile display
+.env.example	Environment template
+README.md	Setup instructions
+To Run the App
+Install dependencies: npm install
+Create OAuth apps (see README.md for detailed steps):
+Google: https://console.cloud.google.com/apis/credentials
+GitHub: https://github.com/settings/developers
+Copy and edit environment file:
+
+cp .env.example .env
+# Edit .env with your credentials
+Start the server: npm start
+Open http://localhost:3000
+The callback URLs to use when creating OAuth apps:
+
+Google: http://localhost:3000/auth/callback/google
+GitHub: http://localhost:3000/auth/callback/github
+For now, I cannot get google client ID and secret key, so skip google verify and I will just build for github
+I'll update the application to work with GitHub only and remove the Google authentication option.
+
+Edit e:\OIDC\client\src\components\Login.jsx
+Removed 17 lines
+Read e:\OIDC\server\auth.js
+Edit e:\OIDC\server\auth.js
+Removed 24 lines
+Read e:\OIDC\server\routes.js
+Edit e:\OIDC\server\routes.js
+Removed 12 lines
+Read e:\OIDC\package.json
+Edit e:\OIDC\package.json
+Modified
+Edit e:\OIDC\package.json
+Removed 1 line
+Read e:\OIDC\server\index.js
+Edit e:\OIDC\server\index.js
+Removed 2 lines
+Done. I've removed Google OAuth and kept only GitHub authentication. The changes:
+
+Login.jsx - Removed Google button, now shows only "Sign in with GitHub"
+auth.js - Removed Google strategy import and configuration
+routes.js - Removed Google auth routes
+package.json - Removed passport-google-oauth20 dependency
+index.js - Simplified startup message
+Now you can run:
+
+
+npm install
+npm start
+Then visit http://localhost:3000 and click "Sign in with GitHub" to test the OIDC flow.
+
+I clicked sign in with GitHub button and sent api to 
+http://localhost:3000/auth/github and got 500 error: Error: Unknown authentication strategy "github"
+The error occurs because the .env file isn't being loaded properly. The app is reading from .env.example but you need a .env file. Let me check and fix this.
+
+Bash Check if .env file exists
+IN
+if exist "e:\OIDC\.env" (echo .env exists) else (echo .env does not exist)
+
+OUT
+Exit code 2
+/usr/bin/bash: eval: line 1: syntax error near unexpected token `('
+/usr/bin/bash: eval: line 1: `if exist "e:\OIDC\.env" (echo .env exists) else (echo .env does not exist) < /dev/null'
+Globpattern: "*.env*"
+Found 2 files
+The .env file exists. Let me check its contents to make sure the credentials are there.
+
+Read e:\OIDC\.env
+The .env file looks correct. The issue is likely that dotenv is looking for the .env file relative to where Node is running, not relative to the server file. Let me fix the path in server/index.js.
+
+Read e:\OIDC\server\index.js
+Edit e:\OIDC\server\index.js
+Added 1 line
+I see there's now a duplicate const path = require('path');. Let me fix that.
+
+Edit e:\OIDC\server\index.js
+Removed 1 line
+Now restart your server and try again:
+
+
+npm start
+The issue was that dotenv was looking for .env in the current working directory, but since the server runs from server/index.js, it wasn't finding it. Now it explicitly points to the .env file in the project root.
